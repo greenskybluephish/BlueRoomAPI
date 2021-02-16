@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface IArtistRepository
+    public interface IArtistRepository : IRepositoryBase<Artist>
     {
         Task<IEnumerable<Artist>> GetAllArtistsAsync(bool trackChanges);
         Task<Artist> GetArtistAsync(Guid artistId, bool trackChanges);

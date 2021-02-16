@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface IExternalMediaObjectRepository
+    public interface IExternalMediaObjectRepository : IRepositoryBase<ExternalMediaObject>
     {
         Task<IEnumerable<ExternalMediaObject>> GetAllExternalMediaObjectsAsync(bool trackChanges);
         Task<ExternalMediaObject> GetExternalMediaObjectAsync(Guid externalMediaObjectId, bool trackChanges);

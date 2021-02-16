@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface INoteRepository
+    public interface INoteRepository : IRepositoryBase<Note>
     {
         Task<IEnumerable<Note>> GetAllNotesAsync(bool trackChanges);
         Task<Note> GetNoteAsync(Guid noteId, bool trackChanges);
