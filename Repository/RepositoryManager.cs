@@ -1,13 +1,12 @@
-﻿using Contracts;
+﻿using System.Threading.Tasks;
+using Contracts;
 using Entities;
-using System.Threading.Tasks;
 
 namespace Repository
 {
     public class RepositoryManager : IRepositoryManager
     {
-        private RepositoryContext _repositoryContext;
-        private ISongRepository _songRepository;
+        private readonly RepositoryContext _repositoryContext;
         private IArtistRepository _artistRepository;
         private ICommentRepository _commentRepository;
         private IExternalMediaObjectRepository _externalMediaObjectRepository;
@@ -15,6 +14,7 @@ namespace Repository
         private INoteRepository _noteRepository;
         private ISetlistRepository _setlistRepository;
         private ISongPerformanceRepository _songPerformanceRepository;
+        private ISongRepository _songRepository;
         private IVenueRepository _venueRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
@@ -22,46 +22,14 @@ namespace Repository
             _repositoryContext = repositoryContext;
         }
 
-        public ISongRepository Song
-        {
-            get
-            {
-                if (_songRepository == null)
-                    _songRepository = new SongRepository(_repositoryContext);
+        public ISongRepository Song => _songRepository ??= new SongRepository(_repositoryContext);
 
-                return _songRepository;
-            }
-        }
-        public IArtistRepository Artist
-        {
-            get
-            {
-                if (_artistRepository == null)
-                    _artistRepository = new ArtistRepository(_repositoryContext);
+        public IArtistRepository Artist => _artistRepository ??= new ArtistRepository(_repositoryContext);
 
-                return _artistRepository;
-            }
-        }
-        public ICommentRepository Comment
-        {
-            get
-            {
-                if (_commentRepository == null)
-                    _commentRepository = new CommentRepository(_repositoryContext);
+        public ICommentRepository Comment => _commentRepository ??= new CommentRepository(_repositoryContext);
 
-                return _commentRepository;
-            }
-        }
-        public IExternalMediaObjectRepository ExternalMediaObject
-        {
-            get
-            {
-                if (_externalMediaObjectRepository == null)
-                    _externalMediaObjectRepository = new ExternalMediaObjectRepository(_repositoryContext);
-
-                return _externalMediaObjectRepository;
-            }
-        }
+        public IExternalMediaObjectRepository ExternalMediaObject =>
+            _externalMediaObjectRepository ??= new ExternalMediaObjectRepository(_repositoryContext);
 
         public ILocaleRepository Locale
         {
@@ -73,6 +41,7 @@ namespace Repository
                 return _localeRepository;
             }
         }
+
         public INoteRepository Note
         {
             get
@@ -83,6 +52,7 @@ namespace Repository
                 return _noteRepository;
             }
         }
+
         public ISetlistRepository Setlist
         {
             get
@@ -116,6 +86,9 @@ namespace Repository
             }
         }
 
-        public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
+        public Task SaveAsync()
+        {
+            return _repositoryContext.SaveChangesAsync();
+        }
     }
 }
