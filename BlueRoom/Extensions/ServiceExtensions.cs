@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Contracts;
+﻿using Contracts;
 using Entities;
-using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Okta.AspNetCore;
-using Repository;
 
 namespace BlueRoom.Extensions
 {
@@ -51,10 +45,10 @@ namespace BlueRoom.Extensions
                     config.GetConnectionString("DefaultConnection")));
         }
         public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddScoped<ILoggerManager, LoggerManager>();
+            services.AddScoped<ILoggerManager, ILoggerManager>();
         public static void ConfigureRepositoryManager(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped<IRepositoryManager, IRepositoryManager>();
         }
 
     }

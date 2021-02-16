@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace Entities.Models
+namespace Entities.DataTransferObjects
 {
-    [Table("venue")]
-    public class Venue
+    public class VenueModel
     {
         [Key]
         [Column("VenueId")]
@@ -18,7 +18,7 @@ namespace Entities.Models
 
         [Required] public Guid LocaleId { get; set; }
 
-        public Locale Location { get; set; }
-        public ICollection<Setlist> Setlists { get; set; }
+        public LocaleModel Location { get; set; }
+        public ICollection<SetlistModel> Setlists { get; set; }
     }
 }

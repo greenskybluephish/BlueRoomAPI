@@ -14,6 +14,7 @@ namespace BlueRoom
         public MappingProfile()
         {
             CreateMap<Song, SongDto>();
+            CreateMap<SongDto, Song>();
 
             CreateMap<Setlist, SetlistDto>();
 
@@ -24,6 +25,8 @@ namespace BlueRoom
             CreateMap<SetlistForUpdateDto, Setlist>().ReverseMap();
 
             CreateMap<SongForUpdateDto, Song>();
+
+
         }
     }
 }
