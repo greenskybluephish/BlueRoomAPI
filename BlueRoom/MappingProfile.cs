@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities.DataTranferObjects.SongDto;
 using Entities.Models;
+using AutoMapper;
+using Entities.DataTranferObjects.SetlistDto;
 
 namespace BlueRoom
 {
@@ -11,17 +13,15 @@ namespace BlueRoom
     {
         public MappingProfile()
         {
-            CreateMap<Song, SongDto>()
-                .ForMember(c => c.FullAddress,
-                    opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+            CreateMap<Song, SongDto>();
 
-            CreateMap<Employee, EmployeeDto>();
+            CreateMap<Setlist, SetlistDto>();
 
             CreateMap<SongForCreationDto, Song>();
 
-            CreateMap<EmployeeForCreationDto, Employee>();
+            CreateMap<SetlistForCreationDto, Setlist>().ReverseMap();
 
-            CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
+            CreateMap<SetlistForUpdateDto, Setlist>().ReverseMap();
 
             CreateMap<SongForUpdateDto, Song>();
         }
