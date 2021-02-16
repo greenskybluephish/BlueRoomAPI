@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface ICommentRepository
+    public interface ICommentRepository : IRepositoryBase<Comment>
     {
         Task<IEnumerable<Comment>> GetAllCommentsAsync(bool trackChanges);
         Task<Comment> GetCommentAsync(Guid commentId, bool trackChanges);

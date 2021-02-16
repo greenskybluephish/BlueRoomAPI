@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface ILocaleRepository
+    public interface ILocaleRepository : IRepositoryBase<Locale>
     {
         Task<IEnumerable<Locale>> GetAllLocalesAsync(bool trackChanges);
         Task<Locale> GetLocaleAsync(Guid localeId, bool trackChanges);

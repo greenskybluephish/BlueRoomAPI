@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface ISetlistRepository
+    public interface ISetlistRepository : IRepositoryBase<Setlist>
     {
         Task<IEnumerable<Setlist>> GetAllSetlistsAsync(bool trackChanges);
         Task<Setlist> GetSetlistAsync(Guid setlistId, bool trackChanges);

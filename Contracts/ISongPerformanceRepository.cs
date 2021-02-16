@@ -5,7 +5,7 @@ using Entities.Models;
 
 namespace Contracts
 {
-    public interface ISongPerformanceRepository
+    public interface ISongPerformanceRepository: IRepositoryBase<SongPerformance>
     {
         Task<IEnumerable<SongPerformance>> GetAllSongPerformancesAsync(bool trackChanges);
         Task<SongPerformance> GetSongPerformanceAsync(Guid songPerformanceId, bool trackChanges);

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
-using Entities.DataTranferObjects;
+using Entities.DataTransferObjects;
 using Entities.DataTranferObjects.ArtistDto;
 using Entities.DataTranferObjects.ExternalMediaObjectDto;
 using Entities.DataTranferObjects.SongDto;
@@ -31,51 +31,73 @@ namespace BlueRoom.Controllers
             _mapper = mapper;
         }
 
-        // GET api/Song
-        [HttpGet]
+
+        // GET api/SONG
+        //[HttpGet]
+        //[HttpGet]
         public async Task<IActionResult> Get()
         {
             var companies = await _repository.Song.GetAllSongsAsync(trackChanges: false);
 
-            var companiesDto = _mapper.Map<IEnumerable<SongDto>(companies);
+            var companiesDto = _mapper.Map<IQueryable<SongDto>>(companies);
 
             return Ok(companiesDto);
         }
 
-        // GET api/Song/{email}
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            var song = await _repository.Song.GetSongAsync(id, trackChanges: false);
-            return Ok(song);
-        }
-
         // POST api/Song
-        [Authorize]
         [HttpPost]
-        public async Task Post(SongForCreationDto model)
+        public async Task Post(SongModel model)
         {
-            await _repository.AddAsync(model);
-            await _repository.SaveChangesAsync();
+            var mapped = _mapper.Map<Song>(model);
+            _repository.Song.Create(mapped);
+            await _repository.SaveAsync();
         }
 
-        // PUT api/Song/{email}
-        [Authorize]
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put(string id, Song model)
-        {
-            var exists = await _repository.Song.AnyAsync(f => f.Id == id);
-            if (!exists)
-            {
-                return NotFound();
-            }
+        // GET api/Song
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var companies = await _repository.Song.GetAllSongsAsync(trackChanges: false);
 
-            _repository.Song.Update(model);
+        //    var companiesDto = _mapper.Map<IQueryable<SongDto>>(companies);
 
-            await _repository.SaveChangesAsync();
+        //    return Ok(companiesDto);
+        //}
 
-            return Ok();
-        }
+        //// GET api/Song/{email}
+        //[Authorize]
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Get(Guid id)
+        //{
+        //    var song = await _repository.Song.GetSongAsync(id, trackChanges: false);
+        //    return Ok(song);
+        //}
+
+        //// POST api/Song
+        //[Authorize]
+        //[HttpPost]
+        //public async Task Post(SongForCreationDto model)
+        //{
+        //    await _repository.Song.
+        //    await _repository.SaveAsync();
+        //}
+
+        //// PUT api/Song/{email}
+        //[Authorize]
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult> Put(string id, Song model)
+        //{
+        //    var exists = await _repository.Song.AnyAsync(f => f.Id == id);
+        //    if (!exists)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _repository.Song.Update(model);
+
+        //    await _repository.SaveAsync();
+
+        //    return Ok();
+        //}
     }
 }
