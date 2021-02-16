@@ -24,7 +24,9 @@ namespace BlueRoom.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public SongsController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public SongsController(IRepositoryManager repository, 
+            ILoggerManager logger,
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;

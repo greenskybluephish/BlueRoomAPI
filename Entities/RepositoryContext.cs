@@ -7,7 +7,7 @@ namespace Entities
     public class RepositoryContext : DbContext
     {
         public RepositoryContext(DbContextOptions options)
-        : base(options)
+            : base(options)
         {
         }
 
@@ -20,5 +20,19 @@ namespace Entities
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ExternalMediaObject> ExternalMediaObjects { get; set; }
         public DbSet<Note> Notes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Song>()
+                .HasMany(o => o.SongPerformances)
+                .WithOne(l => l.Song)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Setlist>()
+                .HasMany(o => o.SongPerformances)
+                .WithOne(l => l.Setlist)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }
