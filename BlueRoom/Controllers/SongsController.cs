@@ -33,8 +33,8 @@ namespace BlueRoom.Controllers
 
 
         // GET api/SONG
-        //[HttpGet]
-        //[HttpGet]
+
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var companies = await _repository.Song.GetAllSongsAsync(trackChanges: false);
