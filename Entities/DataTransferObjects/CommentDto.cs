@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class CommentModel
+    public class CommentDto
     {
         [Key]
         [Column("CommentId")]

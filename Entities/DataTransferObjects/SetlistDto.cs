@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class SetlistModel
+    public class SetlistDto
     {
         public Guid Id { get; set; }
 
@@ -23,9 +23,9 @@ namespace Entities.DataTransferObjects
         public Guid PerformingArtistId { get; set; }
 
         public Artist PerformingArtist { get; set; }
-        public ICollection<SongPerformanceModel> SongPerformances { get; set; }
-        public ICollection<CommentModel> Comments { get; set; }
-        public ICollection<NoteModel> Notes { get; set; }
-        public ICollection<ExternalMediaObjectModel> ExternalMediaObjects { get; set; }
+        public ICollection<SongPerformanceDto> SongPerformances { get; set; }
+        public ICollection<CommentDto> Comments { get; set; }
+        public ICollection<NoteDto> Notes { get; set; }
+        public ICollection<ExternalMediaObjectDto> ExternalMediaObjects { get; set; }
     }
 }
