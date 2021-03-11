@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class ExternalMediaObjectModel
+    public class ExternalMediaObjectDto
     {
         [Key]
         [Column("CommentId")]

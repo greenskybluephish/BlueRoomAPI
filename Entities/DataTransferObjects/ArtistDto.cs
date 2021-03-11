@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class ArtistModel
+    public class ArtistDto
     {
         public Guid Id { get; set; }
         [Required]

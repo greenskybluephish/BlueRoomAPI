@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class SongModel
+    public class SongDto
     {
         public Guid Id { get; set; }
 
@@ -16,8 +16,8 @@ namespace Entities.DataTransferObjects
 
         [Required] public Guid OriginalArtistId { get; set; }
 
-        public ArtistModel OriginalArtist { get; set; }
-        public ICollection<ExternalMediaObjectModel> ExternalMediaObjects { get; set; }
-        public ICollection<SongPerformanceModel> SongPerformances { get; set; }
+        public ArtistDto OriginalArtist { get; set; }
+        public ICollection<ExternalMediaObjectDto> ExternalMediaObjects { get; set; }
+        public ICollection<SongPerformanceDto> SongPerformances { get; set; }
     }
 }

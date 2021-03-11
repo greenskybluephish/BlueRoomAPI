@@ -7,7 +7,7 @@ using Entities.Enumerations;
 namespace Entities.Models
 {
     [Table("song_performance")]
-    public class SongPerformance
+    public class SongPerformance : IEntity
     {
         [Key] [Column("SongPerformanceId")] public Guid Id { get; set; }
 

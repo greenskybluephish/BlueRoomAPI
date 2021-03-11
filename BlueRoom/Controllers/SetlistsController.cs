@@ -13,15 +13,15 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlueRoom.Controllers
 {
-    [Route("api/songs")]
+    [Route("api/Setlists")]
     [ApiController]
-    public class SongsController : ControllerBase
+    public class SetlistsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public SongsController(IRepositoryManager repository, 
+        public SetlistsController(IRepositoryManager repository,
             ILoggerManager logger,
             IMapper mapper)
         {
@@ -30,50 +30,48 @@ namespace BlueRoom.Controllers
             _mapper = mapper;
         }
 
-        // GET api/SONG
+        // GET api/Setlist
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var songs = await _repository.Song.GetAllSongsAsync(trackChanges: false);
+            var setlists = await _repository.Setlist.GetAllSetlistsAsync(trackChanges: false);
 
-            var songsDto = _mapper.Map<IQueryable<SongDto>>(songs);
+            var setlistsDto = _mapper.Map<IQueryable<SetlistDto>>(setlists);
 
-            return Ok(songsDto);
+            return Ok(setlistsDto);
         }
 
-        // GET api/Song/{email}
+
         //[Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var song = await _repository.Song.GetSongAsync(id, trackChanges: false);
-            return Ok(song);
+            var setlist = await _repository.Setlist.GetSetlistAsync(id, trackChanges: false);
+            return Ok(setlist);
         }
 
-        // POST api/Song
+        // POST api/Setlist
         [HttpPost]
-        public async Task Post(SongDto model)
+        public async Task Post(SetlistDto model)
         {
-            var mapped = _mapper.Map<Song>(model);
-            _repository.Song.Create(mapped);
+            var mapped = _mapper.Map<Setlist>(model);
+            _repository.Setlist.Create(mapped);
             await _repository.SaveAsync();
         }
 
-        // PUT api/Song/{email}
-       // [Authorize]
+        // [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] SongDto song)
+        public async Task<ActionResult> Put(Guid id, [FromBody] SetlistDto setlist)
         {
-            var songToUpdate = await _repository.Song.GetSongAsync(id, false);
-            
-            if (songToUpdate == null)
+            var setlistToUpdate = await _repository.Setlist.GetSetlistAsync(id, false);
+
+            if (setlistToUpdate == null)
             {
                 return NotFound();
             }
-            var mappedSong = _mapper.Map<Song>(song);
-            
-            _repository.Song.Update(mappedSong);
-            
+            var mappedSetlist = _mapper.Map<Setlist>(setlist);
+
+            _repository.Setlist.Update(mappedSetlist);
 
             await _repository.SaveAsync();
 
@@ -83,9 +81,9 @@ namespace BlueRoom.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var song = await _repository.Song.GetSongAsync(id, false);
+            var setlist = await _repository.Setlist.GetSetlistAsync(id, false);
 
-            _repository.Song.DeleteSong(song);
+            _repository.Setlist.DeleteSetlist(setlist);
             await _repository.SaveAsync();
             return NoContent();
         }

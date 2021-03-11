@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Entities.DataTranferObjects.SongDto;
+using Entities.DataTransferObjects;
 using Entities.Models;
 using AutoMapper;
-using Entities.DataTranferObjects.SetlistDto;
 
 namespace BlueRoom
 {
@@ -18,14 +17,11 @@ namespace BlueRoom
 
             CreateMap<Setlist, SetlistDto>();
 
-            CreateMap<SongForCreationDto, Song>();
+            CreateMap<SetlistDto, Setlist>();
 
-            CreateMap<SetlistForCreationDto, Setlist>().ReverseMap();
+            CreateMap<Artist, ArtistDto>();
 
-            CreateMap<SetlistForUpdateDto, Setlist>().ReverseMap();
-
-            CreateMap<SongForUpdateDto, Song>();
-
+            CreateMap<ArtistDto, Artist>();
 
         }
     }

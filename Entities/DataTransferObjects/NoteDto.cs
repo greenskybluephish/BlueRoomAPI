@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class NoteModel
+    public class NoteDto
     {
         public Guid Id { get; set; }
 

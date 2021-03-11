@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class VenueModel
+    public class VenueDto
     {
         [Key]
         [Column("VenueId")]
@@ -18,7 +18,7 @@ namespace Entities.DataTransferObjects
 
         [Required] public Guid LocaleId { get; set; }
 
-        public LocaleModel Location { get; set; }
-        public ICollection<SetlistModel> Setlists { get; set; }
+        public LocaleDto Location { get; set; }
+        public ICollection<SetlistDto> Setlists { get; set; }
     }
 }
