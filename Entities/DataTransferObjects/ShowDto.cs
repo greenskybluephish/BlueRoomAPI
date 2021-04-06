@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class SetlistDto
+    public class ShowDto
     {
         public Guid Id { get; set; }
 

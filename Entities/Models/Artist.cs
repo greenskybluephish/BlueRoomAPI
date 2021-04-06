@@ -14,7 +14,9 @@ namespace Entities.Models
 
         public string Description { get; set; }
         public ICollection<Song> OriginalSongs { get; set; }
-        public ICollection<Setlist> SetLists { get; set; }
+        public ICollection<Show> Shows { get; set; }
         public ICollection<ExternalMediaObject> ExternalMediaObjects { get; set; }
+        [NotMapped]
+        public IEnumerable<SongPerformance> SongPerformances { get;set;}
     }
 }

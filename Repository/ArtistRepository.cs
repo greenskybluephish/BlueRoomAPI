@@ -25,6 +25,11 @@ namespace Repository
             await FindByCondition(c => c.Id.Equals(artistId), trackChanges)
                 .SingleOrDefaultAsync();
 
+        public async Task<Artist> GetArtistWithSongsAsync(Guid artistId) =>
+           await FindByCondition(c => c.Id.Equals(artistId), false)
+            .Include(a=>a.OriginalSongs)
+               .SingleOrDefaultAsync();
+
         public async Task<IEnumerable<Artist>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
             await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();

@@ -19,6 +19,6 @@ namespace Entities.DataTransferObjects
         [Required] public Guid LocaleId { get; set; }
 
         public LocaleDto Location { get; set; }
-        public ICollection<SetlistDto> Setlists { get; set; }
+        public ICollection<ShowDto> Shows { get; set; }
     }
 }

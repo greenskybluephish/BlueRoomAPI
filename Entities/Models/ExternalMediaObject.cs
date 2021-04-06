@@ -19,7 +19,7 @@ namespace Entities.Models
         [Required] public MediaType Type { get; set; }
 
         public ICollection<SongPerformance> SongPerformances { get; set; }
-        public ICollection<Setlist> Setlists { get; set; }
+        public ICollection<Show> Shows { get; set; }
         public ICollection<Artist> Artists { get; set; }
     }
 }

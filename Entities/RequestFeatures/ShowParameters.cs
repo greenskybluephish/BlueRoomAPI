@@ -1,8 +1,8 @@
 ﻿namespace Entities.RequestFeatures
 {
-    public class SetlistParameters : RequestParameters
+    public class ShowParameters : RequestParameters
     {
-        public SetlistParameters()
+        public ShowParameters()
         {
             OrderBy = "date";
         }

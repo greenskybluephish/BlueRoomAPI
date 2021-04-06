@@ -1,4 +1,4 @@
-﻿using Entities.Enumerations;
+﻿using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,13 +13,13 @@ namespace Entities.DataTransferObjects
 
         [Required] public SetNumber SetIndex { get; set; }
 
-        [Required] public int SetlistSongIndex { get; set; }
+        [Required] public int ShowSongIndex { get; set; }
 
         public int? Duration { get; set; }
         public int? MediaLinkId { get; set; }
         public ExternalMediaObjectDto MediaLink { get; set; }
 
-        [Required] public Guid SetlistId { get; set; }
+        [Required] public Guid ShowId { get; set; }
 
 
         [Required] public Guid SongId { get; set; }

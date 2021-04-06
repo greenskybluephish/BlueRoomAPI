@@ -13,7 +13,7 @@ namespace Entities.DataTransferObjects
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Song> Songs { get; set; }
-        public ICollection<Setlist> SetLists { get; set; }
+        public ICollection<Show> Shows { get; set; }
         public ICollection<ExternalMediaObject> ExternalMediaObjects { get; set; }
     }
 }

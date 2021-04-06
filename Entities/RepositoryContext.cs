@@ -10,12 +10,10 @@ namespace Entities
             : base(options)
         {
         }
-
         public DbSet<Song> Songs { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Venue> Venues { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,9 +23,9 @@ namespace Entities
                 .HasMany(o => o.SongPerformances)
                 .WithOne(l => l.Song)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Setlist>()
+            modelBuilder.Entity<Show>()
                 .HasMany(o => o.SongPerformances)
-                .WithOne(l => l.Setlist)
+                .WithOne(l => l.Show)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

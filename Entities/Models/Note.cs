@@ -15,6 +15,6 @@ namespace Entities.Models
         [Required] public string Description { get; set; }
 
         public ICollection<SongPerformance> SongPerformancess { get; set; }
-        public ICollection<Setlist> Setlists { get; set; }
+        public ICollection<Show> Shows { get; set; }
     }
 }

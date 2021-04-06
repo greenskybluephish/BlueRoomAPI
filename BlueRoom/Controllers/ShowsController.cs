@@ -13,15 +13,15 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BlueRoom.Controllers
 {
-    [Route("api/Setlists")]
+    [Route("api/Shows")]
     [ApiController]
-    public class SetlistsController : ControllerBase
+    public class ShowController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public SetlistsController(IRepositoryManager repository,
+        public ShowController(IRepositoryManager repository,
             ILoggerManager logger,
             IMapper mapper)
         {
@@ -30,15 +30,15 @@ namespace BlueRoom.Controllers
             _mapper = mapper;
         }
 
-        // GET api/Setlist
+        // GET api/Show
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var setlists = await _repository.Setlist.GetAllSetlistsAsync(trackChanges: false);
+            var shows = await _repository.Show.GetAllShowsAsync(trackChanges: false);
 
-            var setlistsDto = _mapper.Map<IQueryable<SetlistDto>>(setlists);
+            var showsDto = _mapper.Map<IQueryable<ShowDto>>(shows);
 
-            return Ok(setlistsDto);
+            return Ok(showsDto);
         }
 
 
@@ -46,32 +46,32 @@ namespace BlueRoom.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var setlist = await _repository.Setlist.GetSetlistAsync(id, trackChanges: false);
-            return Ok(setlist);
+            var show = await _repository.Show.GetShowAsync(id, trackChanges: false);
+            return Ok(show);
         }
 
-        // POST api/Setlist
+        // POST api/Show
         [HttpPost]
-        public async Task Post(SetlistDto model)
+        public async Task Post(ShowDto model)
         {
-            var mapped = _mapper.Map<Setlist>(model);
-            _repository.Setlist.Create(mapped);
+            var mapped = _mapper.Map<Show>(model);
+            _repository.Show.Create(mapped);
             await _repository.SaveAsync();
         }
 
         // [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] SetlistDto setlist)
+        public async Task<ActionResult> Put(Guid id, [FromBody] ShowDto show)
         {
-            var setlistToUpdate = await _repository.Setlist.GetSetlistAsync(id, false);
+            var showToUpdate = await _repository.Show.GetShowAsync(id, false);
 
-            if (setlistToUpdate == null)
+            if (showToUpdate == null)
             {
                 return NotFound();
             }
-            var mappedSetlist = _mapper.Map<Setlist>(setlist);
+            var mappedShow = _mapper.Map<Show>(show);
 
-            _repository.Setlist.Update(mappedSetlist);
+            _repository.Show.Update(mappedShow);
 
             await _repository.SaveAsync();
 
@@ -81,9 +81,9 @@ namespace BlueRoom.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var setlist = await _repository.Setlist.GetSetlistAsync(id, false);
+            var show = await _repository.Show.GetShowAsync(id, false);
 
-            _repository.Setlist.DeleteSetlist(setlist);
+            _repository.Show.DeleteShow(show);
             await _repository.SaveAsync();
             return NoContent();
         }

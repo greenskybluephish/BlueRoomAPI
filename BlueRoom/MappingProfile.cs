@@ -13,11 +13,12 @@ namespace BlueRoom
         public MappingProfile()
         {
             CreateMap<Song, SongDto>();
+
             CreateMap<SongDto, Song>();
 
-            CreateMap<Setlist, SetlistDto>();
+            CreateMap<Show, ShowDto>();
 
-            CreateMap<SetlistDto, Setlist>();
+            CreateMap<ShowDto, Show>();
 
             CreateMap<Artist, ArtistDto>();
 
@@ -26,15 +27,10 @@ namespace BlueRoom
             CreateMap<SongPerformance, SongPerformanceDto>();
 
             CreateMap<SongPerformanceDto, SongPerformance>();
+
             CreateMap<Venue, VenueDto>();
 
             CreateMap<VenueDto, Venue>();
-            CreateMap<Locale, LocaleDto>();
-
-            CreateMap<LocaleDto, Locale>();
-
-
-
 
         }
     }

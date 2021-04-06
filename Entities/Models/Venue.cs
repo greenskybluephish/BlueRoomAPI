@@ -19,6 +19,6 @@ namespace Entities.Models
         [Required] public Guid LocaleId { get; set; }
 
         public Locale Location { get; set; }
-        public ICollection<Setlist> Setlists { get; set; }
+        public ICollection<Show> Shows { get; set; }
     }
 }

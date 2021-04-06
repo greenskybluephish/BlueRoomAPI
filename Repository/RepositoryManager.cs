@@ -8,12 +8,8 @@ namespace Repository
     {
         private readonly RepositoryContext _repositoryContext;
         private IArtistRepository _artistRepository;
-        private ICommentRepository _commentRepository;
-        private IExternalMediaObjectRepository _externalMediaObjectRepository;
-        private ILocaleRepository _localeRepository;
-        private INoteRepository _noteRepository;
-        private ISetlistRepository _setlistRepository;
-        private ISongPerformanceRepository _songPerformanceRepository;
+        private IShowRepository _ShowRepository;
+
         private ISongRepository _songRepository;
         private IVenueRepository _venueRepository;
 
@@ -26,52 +22,15 @@ namespace Repository
 
         public IArtistRepository Artist => _artistRepository ??= new ArtistRepository(_repositoryContext);
 
-        public ICommentRepository Comment => _commentRepository ??= new CommentRepository(_repositoryContext);
 
-        public IExternalMediaObjectRepository ExternalMediaObject =>
-            _externalMediaObjectRepository ??= new ExternalMediaObjectRepository(_repositoryContext);
-
-        public ILocaleRepository Locale
+        public IShowRepository Show
         {
             get
             {
-                if (_localeRepository == null)
-                    _localeRepository = new LocaleRepository(_repositoryContext);
+                if (_ShowRepository == null)
+                    _ShowRepository = new ShowRepository(_repositoryContext);
 
-                return _localeRepository;
-            }
-        }
-
-        public INoteRepository Note
-        {
-            get
-            {
-                if (_noteRepository == null)
-                    _noteRepository = new NoteRepository(_repositoryContext);
-
-                return _noteRepository;
-            }
-        }
-
-        public ISetlistRepository Setlist
-        {
-            get
-            {
-                if (_setlistRepository == null)
-                    _setlistRepository = new SetlistRepository(_repositoryContext);
-
-                return _setlistRepository;
-            }
-        }
-
-        public ISongPerformanceRepository SongPerformance
-        {
-            get
-            {
-                if (_songPerformanceRepository == null)
-                    _songPerformanceRepository = new SongPerformanceRepository(_repositoryContext);
-
-                return _songPerformanceRepository;
+                return _ShowRepository;
             }
         }
 
