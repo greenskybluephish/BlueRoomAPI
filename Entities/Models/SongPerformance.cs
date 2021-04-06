@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Entities.Enumerations;
+
 
 namespace Entities.Models
 {
@@ -11,7 +11,10 @@ namespace Entities.Models
     {
         [Key] [Column("SongPerformanceId")] public Guid Id { get; set; }
 
-        [Required] public SetNumber SetIndex { get; set; }
+        [Required]
+        public Guid SetNumberId { get; set; }
+
+         public SetNumber SetIndex { get; set; }
 
         [Required] public int SetlistSongIndex { get; set; }
 

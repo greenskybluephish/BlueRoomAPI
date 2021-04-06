@@ -16,13 +16,14 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<Setlist>> GetAllSetlistsAsync(bool trackChanges) =>
-            await FindAll(trackChanges)
-                .OrderBy(c => c.Date)
+        public async Task<IEnumerable<Setlist>> GetSetlistsAsync(Guid artistId, bool trackChanges) =>
+            await FindByCondition(s => s.PerformingArtistId.Equals(artistId), trackChanges)
+                .OrderByDescending(c => c.Date)
                 .ToListAsync();
 
         public async Task<Setlist> GetSetlistAsync(Guid setlistId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(setlistId), trackChanges)
+            .Include(s=>s.SongPerformances)
                 .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<Setlist>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>

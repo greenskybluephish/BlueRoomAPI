@@ -23,6 +23,19 @@ namespace BlueRoom
 
             CreateMap<ArtistDto, Artist>();
 
+            CreateMap<SongPerformance, SongPerformanceDto>();
+
+            CreateMap<SongPerformanceDto, SongPerformance>();
+            CreateMap<Venue, VenueDto>();
+
+            CreateMap<VenueDto, Venue>();
+            CreateMap<Locale, LocaleDto>();
+
+            CreateMap<LocaleDto, Locale>();
+
+
+
+
         }
     }
 }

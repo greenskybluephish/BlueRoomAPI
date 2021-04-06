@@ -10,8 +10,9 @@ namespace Contracts
     {
         Task<IEnumerable<Artist>> GetAllArtistsAsync(bool trackChanges);
         Task<Artist> GetArtistAsync(Guid artistId, bool trackChanges);
+        Task<Artist> GetArtistWithSongsAsync(Guid artistId);
         void CreateArtist(Artist artist);
-        Task<IEnumerable<Artist>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);
+
         void DeleteArtist(Artist artist);
     }
 }

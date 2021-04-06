@@ -36,7 +36,7 @@ namespace BlueRoom.Controllers
         {
             var songs = await _repository.Song.GetAllSongsAsync(trackChanges: false);
 
-            var songsDto = _mapper.Map<IQueryable<SongDto>>(songs);
+            var songsDto = _mapper.Map<IEnumerable<SongDto>>(songs);
 
             return Ok(songsDto);
         }

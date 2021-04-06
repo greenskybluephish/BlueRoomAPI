@@ -29,6 +29,8 @@ namespace Repository
             await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
 
+        public UpdateNote(Note note) => Update(note);
+
         public void CreateNote(Note note) => Create(note);
 
         public void DeleteNote(Note note)
