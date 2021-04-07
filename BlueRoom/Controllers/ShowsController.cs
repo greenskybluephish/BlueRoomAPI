@@ -4,24 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BlueRoom.Controllers
 {
-    [Route("api/songs")]
+    [Route("api/Shows")]
     [ApiController]
-    public class SongsController : ControllerBase
+    public class ShowController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public SongsController(IRepositoryManager repository, 
+        public ShowController(IRepositoryManager repository,
             ILoggerManager logger,
             IMapper mapper)
         {
@@ -30,50 +32,50 @@ namespace BlueRoom.Controllers
             _mapper = mapper;
         }
 
-        // GET api/SONG
+        // GET api/Show
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var songs = await _repository.Song.GetAllSongsAsync(trackChanges: false);
+            var shows = _repository.Show.FindAll(false)
+                .Include(s=>s.SongPerformances)
+                .Include(a=>a.PerformingArtist).AsQueryable();
 
-            var songsDto = _mapper.Map<IEnumerable<SongDto>>(songs);
+            var showsDto = await _mapper.ProjectTo<ShowDto>(shows).ToListAsync();
 
-            return Ok(songsDto);
+            return Ok(showsDto);
         }
 
-        // GET api/Song/{email}
+
         //[Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var song = await _repository.Song.GetSongAsync(id, trackChanges: false);
-            return Ok(song);
+            var show = await _repository.Show.GetShowAsync(id, trackChanges: false);
+            return Ok(show);
         }
 
-        // POST api/Song
+        // POST api/Show
         [HttpPost]
-        public async Task Post(SongDto model)
+        public async Task Post(ShowDto model)
         {
-            var mapped = _mapper.Map<Song>(model);
-            _repository.Song.Create(mapped);
+            var mapped = _mapper.Map<Show>(model);
+            _repository.Show.Create(mapped);
             await _repository.SaveAsync();
         }
 
-        // PUT api/Song/{email}
-       // [Authorize]
+        // [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] SongDto song)
+        public async Task<ActionResult> Put(int id, [FromBody] ShowDto show)
         {
-            var songToUpdate = await _repository.Song.GetSongAsync(id, false);
-            
-            if (songToUpdate == null)
+            var showToUpdate = await _repository.Show.GetShowAsync(id, false);
+
+            if (showToUpdate == null)
             {
                 return NotFound();
             }
-            var mappedSong = _mapper.Map<Song>(song);
-            
-            _repository.Song.Update(mappedSong);
-            
+            var mappedShow = _mapper.Map<Show>(show);
+
+            _repository.Show.Update(mappedShow);
 
             await _repository.SaveAsync();
 
@@ -83,9 +85,9 @@ namespace BlueRoom.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var song = await _repository.Song.GetSongAsync(id, false);
+            var show = await _repository.Show.GetShowAsync(id, false);
 
-            _repository.Song.DeleteSong(song);
+            _repository.Show.DeleteShow(show);
             await _repository.SaveAsync();
             return NoContent();
         }

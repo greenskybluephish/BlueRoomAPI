@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Contracts;
 using Entities;
+using Entities.Context;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace Repository
 {
     public class VenueRepository : RepositoryBase<Venue>, IVenueRepository
     {
-        public VenueRepository(RepositoryContext repositoryContext)
+        public VenueRepository(BlueRoomContext repositoryContext)
             : base(repositoryContext)
         {
         }
@@ -21,12 +22,12 @@ namespace Repository
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-        public async Task<Venue> GetVenueAsync(Guid venueId, bool trackChanges) =>
-            await FindByCondition(c => c.Id.Equals(venueId), trackChanges)
+        public async Task<Venue> GetVenueAsync(int venueId, bool trackChanges) =>
+            await FindByCondition(c => c.VenueId.Equals(venueId), trackChanges)
                 .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Venue>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
-            await FindByCondition(x => ids.Contains(x.Id), trackChanges)
+        public async Task<IEnumerable<Venue>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges) =>
+            await FindByCondition(x => ids.Contains(x.VenueId), trackChanges)
                 .ToListAsync();
 
         public void CreateVenue(Venue venue) => Create(venue);

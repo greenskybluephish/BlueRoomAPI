@@ -8,17 +8,21 @@ namespace Entities.DataTransferObjects
 {
     public class VenueDto
     {
-        [Key]
-        [Column("VenueId")]
-        public Guid Id { get; set; }
+        public int VenueId { get; set; }
 
         [Required] public string Name { get; set; }
 
         public string Description { get; set; }
 
-        [Required] public Guid LocaleId { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string City { get; set; }
+        [Required]
+        [StringLength(55)]
+        public string State { get; set; }
 
-        public LocaleDto Location { get; set; }
-        public ICollection<SetlistDto> Setlists { get; set; }
+        [StringLength(55)]
+        public string Country { get; set; }
+        public ICollection<ShowDto> Shows { get; set; }
     }
 }

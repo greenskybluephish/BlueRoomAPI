@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Contracts;
 using Entities;
+using Entities.Context;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ namespace Repository
 {
     public class SongRepository : RepositoryBase<Song>, ISongRepository
     {
-        public SongRepository(RepositoryContext repositoryContext)
+        public SongRepository(BlueRoomContext repositoryContext)
             : base(repositoryContext)
         {
         }
@@ -22,19 +23,19 @@ namespace Repository
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-        public async Task<Song> GetSongAsync(Guid SongId, bool trackChanges) =>
-            await FindByCondition(c => c.Id.Equals(SongId), trackChanges)
+        public async Task<Song> GetSongAsync(int songId, bool trackChanges) =>
+            await FindByCondition(c => c.SongId.Equals(songId), trackChanges)
                 .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Song>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
-            await FindByCondition(x => ids.Contains(x.Id), trackChanges)
+        public async Task<IEnumerable<Song>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges) =>
+            await FindByCondition(x => ids.Contains(x.SongId), trackChanges)
                 .ToListAsync();
 
-        public void CreateSong(Song Song) => Create(Song);
+        public void CreateSong(Song song) => Create(song);
 
-        public void DeleteSong(Song Song)
+        public void DeleteSong(Song song)
         {
-            Delete(Song);
+            Delete(song);
         }
     }
 }

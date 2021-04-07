@@ -8,12 +8,12 @@ namespace Entities.DataTransferObjects
 {
     public class ArtistDto
     {
-        public Guid Id { get; set; }
+        public int ArtistId { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Song> Songs { get; set; }
-        public ICollection<Setlist> SetLists { get; set; }
-        public ICollection<ExternalMediaObject> ExternalMediaObjects { get; set; }
+        public ICollection<SongDto> Songs { get; set; }
+        public ICollection<ShowDto> Shows { get; set; }
+
     }
 }

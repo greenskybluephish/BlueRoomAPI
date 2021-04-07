@@ -13,15 +13,25 @@ namespace BlueRoom
         public MappingProfile()
         {
             CreateMap<Song, SongDto>();
+
             CreateMap<SongDto, Song>();
 
-            CreateMap<Setlist, SetlistDto>();
+            CreateMap<Show, ShowDto>()
+                .ForMember(dto=> dto.PerformingArtistName, cfg => cfg.MapFrom(a=>a.PerformingArtist.Name));
 
-            CreateMap<SetlistDto, Setlist>();
+            CreateMap<ShowDto, Show>();
 
             CreateMap<Artist, ArtistDto>();
 
             CreateMap<ArtistDto, Artist>();
+
+            CreateMap<SongPerformance, SongPerformanceDto>();
+
+            CreateMap<SongPerformanceDto, SongPerformance>();
+
+            CreateMap<Venue, VenueDto>();
+
+            CreateMap<VenueDto, Venue>();
 
         }
     }

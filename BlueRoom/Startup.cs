@@ -34,7 +34,7 @@ namespace BlueRoom
         {
             services.ConfigureCors();
             services.ConfigureSqlServerContext(Configuration);
-/*            services.ConfigureLoggerService();*/
+            services.ConfigureLoggerService();
             services.ConfigureRepositoryManager();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
