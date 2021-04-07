@@ -5,10 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    [Table("locale")]
     public class Locale
     {
-        [Key] [Column("LocaleId")] public Guid Id { get; set; }
+        [Key] [Column("LocaleId")] public int Id { get; set; }
 
         [Required] public string City { get; set; }
 

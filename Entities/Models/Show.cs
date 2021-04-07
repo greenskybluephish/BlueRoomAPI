@@ -6,21 +6,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Entities.Models
 {
 
-    [Table("show")]
     public class Show : IEntity
     {
-        [Key] [Column("ShowId")] public Guid Id { get; set; }
+        [Key] [Column("ShowId")] public int Id { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Date { get; set; }
 
-        [Required] public Guid VenueId { get; set; }
+        [Required] public int VenueId { get; set; }
 
         public Venue Venue { get; set; }
 
         [Required(ErrorMessage = "Artist is required")]
-        public Guid PerformingArtistId { get; set; }
+        public int PerformingArtistId { get; set; }
 
         public Artist PerformingArtist { get; set; }
         public ICollection<SongPerformance> SongPerformances { get; set; }

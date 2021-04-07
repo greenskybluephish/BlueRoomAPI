@@ -44,7 +44,7 @@ namespace BlueRoom.Controllers
         // GET api/Song/{email}
         //[Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(int id)
         {
             var song = await _repository.Song.GetSongAsync(id, trackChanges: false);
             return Ok(song);
@@ -62,7 +62,7 @@ namespace BlueRoom.Controllers
         // PUT api/Song/{email}
        // [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] SongDto song)
+        public async Task<ActionResult> Put(int id, [FromBody] SongDto song)
         {
             var songToUpdate = await _repository.Song.GetSongAsync(id, false);
             
@@ -81,7 +81,7 @@ namespace BlueRoom.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
             var song = await _repository.Song.GetSongAsync(id, false);
 

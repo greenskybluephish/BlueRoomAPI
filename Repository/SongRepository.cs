@@ -22,11 +22,11 @@ namespace Repository
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-        public async Task<Song> GetSongAsync(Guid SongId, bool trackChanges) =>
+        public async Task<Song> GetSongAsync(int SongId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(SongId), trackChanges)
                 .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Song>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
+        public async Task<IEnumerable<Song>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges) =>
             await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
 

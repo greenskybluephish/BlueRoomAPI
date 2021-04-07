@@ -7,7 +7,7 @@ namespace Entities.DataTransferObjects
 {
     public class LocaleDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string City { get; set; }
 

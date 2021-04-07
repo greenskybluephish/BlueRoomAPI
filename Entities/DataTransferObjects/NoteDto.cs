@@ -8,7 +8,7 @@ namespace Entities.DataTransferObjects
 {
     public class NoteDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required] public int Index { get; set; }
 

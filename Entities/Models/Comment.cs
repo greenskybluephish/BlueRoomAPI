@@ -4,19 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    [Table("comment")]
     public class Comment
     {
-        [Key] [Column("CommentId")] public Guid Id { get; set; }
+        [Key] [Column("CommentId")] public int Id { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Timestamp { get; set; }
 
-        [Required] public Guid AuthorId { get; set; }
+        [Required] public int AuthorId { get; set; }
 
         [Required] public string Text { get; set; }
 
-        [Required] public Guid ShowId { get; set; }
+        [Required] public int ShowId { get; set; }
 
         public Show Show { get; set; }
     }

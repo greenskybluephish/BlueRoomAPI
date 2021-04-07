@@ -10,18 +10,18 @@ namespace Entities.DataTransferObjects
     {
         [Key]
         [Column("CommentId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Timestamp { get; set; }
 
         [Required]
-        public Guid AuthorId { get; set; }
+        public int AuthorId { get; set; }
 
         [Required]
         public string Text { get; set; }
 
         [Required]
-        public Guid ShowId { get; set; }
+        public int ShowId { get; set; }
     }
 }

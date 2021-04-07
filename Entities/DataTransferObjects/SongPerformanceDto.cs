@@ -9,7 +9,7 @@ namespace Entities.DataTransferObjects
 {
     public class SongPerformanceDto
     {
-        [Key] [Column("SongPerformanceId")] public Guid Id { get; set; }
+        [Key] [Column("SongPerformanceId")] public int Id { get; set; }
 
         [Required] public SetNumber SetIndex { get; set; }
 
@@ -19,10 +19,10 @@ namespace Entities.DataTransferObjects
         public int? MediaLinkId { get; set; }
         public ExternalMediaObjectDto MediaLink { get; set; }
 
-        [Required] public Guid ShowId { get; set; }
+        [Required] public int ShowId { get; set; }
 
 
-        [Required] public Guid SongId { get; set; }
+        [Required] public int SongId { get; set; }
 
         [Required] public SongDto Song { get; set; }
 

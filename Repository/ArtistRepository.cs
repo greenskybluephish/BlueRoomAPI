@@ -21,16 +21,16 @@ namespace Repository
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-        public async Task<Artist> GetArtistAsync(Guid artistId, bool trackChanges) =>
+        public async Task<Artist> GetArtistAsync(int artistId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(artistId), trackChanges)
                 .SingleOrDefaultAsync();
 
-        public async Task<Artist> GetArtistWithSongsAsync(Guid artistId) =>
+        public async Task<Artist> GetArtistWithSongsAsync(int artistId) =>
            await FindByCondition(c => c.Id.Equals(artistId), false)
             .Include(a=>a.OriginalSongs)
                .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Artist>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
+        public async Task<IEnumerable<Artist>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges) =>
             await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
 

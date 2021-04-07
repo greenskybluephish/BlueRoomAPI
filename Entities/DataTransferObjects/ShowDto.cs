@@ -9,18 +9,18 @@ namespace Entities.DataTransferObjects
 {
     public class ShowDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Date { get; set; }
 
-        [Required] public Guid VenueId { get; set; }
+        [Required] public int VenueId { get; set; }
 
         public Venue Venue { get; set; }
 
         [Required(ErrorMessage = "Artist Id is required")]
-        public Guid PerformingArtistId { get; set; }
+        public int PerformingArtistId { get; set; }
 
         public Artist PerformingArtist { get; set; }
         public ICollection<SongPerformanceDto> SongPerformances { get; set; }

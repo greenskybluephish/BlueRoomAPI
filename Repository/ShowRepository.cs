@@ -21,17 +21,17 @@ namespace Repository
             .OrderByDescending(c => c.Date)
             .ToListAsync();
 
-        public async Task<IEnumerable<Show>> GetShowsAsync(Guid artistId, bool trackChanges) =>
+        public async Task<IEnumerable<Show>> GetShowsAsync(int artistId, bool trackChanges) =>
             await FindByCondition(s => s.PerformingArtistId.Equals(artistId), trackChanges)
                 .OrderByDescending(c => c.Date)
                 .ToListAsync();
 
-        public async Task<Show> GetShowAsync(Guid showId, bool trackChanges) =>
+        public async Task<Show> GetShowAsync(int showId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(showId), trackChanges)
             .Include(s=>s.SongPerformances)
                 .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Show>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) =>
+        public async Task<IEnumerable<Show>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges) =>
             await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
 

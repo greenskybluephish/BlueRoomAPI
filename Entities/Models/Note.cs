@@ -5,10 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    [Table("note")]
     public class Note
     {
-        [Key] [Column("NoteId")] public Guid Id { get; set; }
+        [Key] [Column("NoteId")] public int Id { get; set; }
 
         [Required] public int Index { get; set; }
 

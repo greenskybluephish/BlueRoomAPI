@@ -6,7 +6,7 @@ namespace Entities.Models
 {
     public class MediaType
     {
-        public Guid MediaTypeId { get; set; }
+        public int MediaTypeId { get; set; }
          public string MediaTypeName { get; set; }
     }
 }

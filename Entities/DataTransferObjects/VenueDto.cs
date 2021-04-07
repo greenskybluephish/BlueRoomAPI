@@ -10,13 +10,13 @@ namespace Entities.DataTransferObjects
     {
         [Key]
         [Column("VenueId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required] public string Name { get; set; }
 
         public string Description { get; set; }
 
-        [Required] public Guid LocaleId { get; set; }
+        [Required] public int LocaleId { get; set; }
 
         public LocaleDto Location { get; set; }
         public ICollection<ShowDto> Shows { get; set; }

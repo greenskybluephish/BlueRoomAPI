@@ -8,7 +8,7 @@ namespace Entities.DataTransferObjects
 {
     public class ArtistDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }

@@ -44,7 +44,7 @@ namespace BlueRoom.Controllers
 
         //[Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(int id)
         {
             var show = await _repository.Show.GetShowAsync(id, trackChanges: false);
             return Ok(show);
@@ -61,7 +61,7 @@ namespace BlueRoom.Controllers
 
         // [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(Guid id, [FromBody] ShowDto show)
+        public async Task<ActionResult> Put(int id, [FromBody] ShowDto show)
         {
             var showToUpdate = await _repository.Show.GetShowAsync(id, false);
 
@@ -79,7 +79,7 @@ namespace BlueRoom.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
             var show = await _repository.Show.GetShowAsync(id, false);
 
