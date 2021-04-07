@@ -1,6 +1,6 @@
 ﻿using Contracts;
 using Entities;
-using Entities.Models;
+using Entities.Models.Partials;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

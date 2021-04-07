@@ -1,5 +1,6 @@
 ﻿
 using Entities.Models;
+using Entities.Models.Partials;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entities

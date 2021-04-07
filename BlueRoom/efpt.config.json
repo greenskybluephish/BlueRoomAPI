@@ -1,0 +1,56 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "BlueRoomContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Models",
+   "ProceduresReturnList": false,
+   "ProjectRootNamespace": "BlueRoom",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[artist]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[set_number]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[show]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[song]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[song_performance]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[venue]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "JOBEHOME.BlueShades",
+   "UseBoolPropertiesWithoutDefaultSql": true,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSpatial": false
+}

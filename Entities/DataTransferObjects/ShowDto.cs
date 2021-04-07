@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Entities.Models.Partials;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

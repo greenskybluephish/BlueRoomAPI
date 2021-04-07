@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using AutoMapper;
+using Entities.Models.Partials;
 
 namespace BlueRoom
 {

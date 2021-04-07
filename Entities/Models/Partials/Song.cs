@@ -1,21 +1,23 @@
-﻿using System;
+﻿using Entities.Models.Partials;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    public class Artist : IEntity
+    public class Song : IEntity
     {
-        [Key] [Column("ArtistId")] public int Id { get; set; }
+        [Key] 
+        [Column("SongId")] public int Id { get; set; }
 
         [Required] public string Name { get; set; }
 
         public string Description { get; set; }
-        public ICollection<Song> OriginalSongs { get; set; }
-        public ICollection<Show> Shows { get; set; }
+
+        public int OriginalArtistId { get; set; }
+        public Artist OriginalArtist { get; set; }
         public ICollection<ExternalMediaObject> ExternalMediaObjects { get; set; }
-        [NotMapped]
-        public IEnumerable<SongPerformance> SongPerformances { get;set;}
+        public ICollection<SongPerformance> SongPerformances { get; set; }
     }
 }
