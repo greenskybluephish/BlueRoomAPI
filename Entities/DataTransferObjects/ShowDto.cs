@@ -1,5 +1,4 @@
 ﻿using Entities.Models;
-using Entities.Models.Partials;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +9,7 @@ namespace Entities.DataTransferObjects
 {
     public class ShowDto
     {
-        public int Id { get; set; }
+        public int ShowId { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DisplayFormat(DataFormatString = "{0:d}")]
@@ -18,15 +17,13 @@ namespace Entities.DataTransferObjects
 
         [Required] public int VenueId { get; set; }
 
-        public Venue Venue { get; set; }
+        public VenueDto Venue { get; set; }
 
         [Required(ErrorMessage = "Artist Id is required")]
         public int PerformingArtistId { get; set; }
-
-        public Artist PerformingArtist { get; set; }
+        public string PerformingArtistName { get; set; }
         public ICollection<SongPerformanceDto> SongPerformances { get; set; }
-        public ICollection<CommentDto> Comments { get; set; }
-        public ICollection<NoteDto> Notes { get; set; }
-        public ICollection<ExternalMediaObjectDto> ExternalMediaObjects { get; set; }
+/*        public ICollection<SongDto> Songs { get; set; }*/
+
     }
 }

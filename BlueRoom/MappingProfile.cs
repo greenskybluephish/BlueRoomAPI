@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using AutoMapper;
-using Entities.Models.Partials;
 
 namespace BlueRoom
 {
@@ -17,7 +16,8 @@ namespace BlueRoom
 
             CreateMap<SongDto, Song>();
 
-            CreateMap<Show, ShowDto>();
+            CreateMap<Show, ShowDto>()
+                .ForMember(dto=> dto.PerformingArtistName, cfg => cfg.MapFrom(a=>a.PerformingArtist.Name));
 
             CreateMap<ShowDto, Show>();
 

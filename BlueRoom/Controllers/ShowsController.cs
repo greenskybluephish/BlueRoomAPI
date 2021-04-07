@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,9 +36,11 @@ namespace BlueRoom.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var shows = await _repository.Show.GetAllShowsAsync(trackChanges: false);
+            var shows = _repository.Show.FindAll(false)
+                .Include(s=>s.SongPerformances)
+                .Include(a=>a.PerformingArtist).AsQueryable();
 
-            var showsDto = _mapper.Map<IQueryable<ShowDto>>(shows);
+            var showsDto = await _mapper.ProjectTo<ShowDto>(shows).ToListAsync();
 
             return Ok(showsDto);
         }

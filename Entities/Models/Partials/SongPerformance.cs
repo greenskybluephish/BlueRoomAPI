@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace Entities.Models
+namespace Entities.Models.Partials
 {
-    public class SongPerformance : IEntity
+    public class SongPerformance
     {
         [Key] [Column("SongPerformanceId")] public int Id { get; set; }
 

@@ -8,7 +8,7 @@ namespace Entities.DataTransferObjects
 {
     public class SongDto
     {
-        public int Id { get; set; }
+        public int SongId { get; set; }
 
         [Required] public string Name { get; set; }
 
@@ -17,7 +17,7 @@ namespace Entities.DataTransferObjects
         [Required] public int OriginalArtistId { get; set; }
 
         public ArtistDto OriginalArtist { get; set; }
-        public ICollection<ExternalMediaObjectDto> ExternalMediaObjects { get; set; }
+
         public ICollection<SongPerformanceDto> SongPerformances { get; set; }
     }
 }

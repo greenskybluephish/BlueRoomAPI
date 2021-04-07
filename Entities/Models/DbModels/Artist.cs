@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace BlueRoom.Models
+namespace Entities.Models
 {
     [Table("artist")]
     public partial class Artist

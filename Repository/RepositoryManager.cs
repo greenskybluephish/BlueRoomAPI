@@ -1,49 +1,27 @@
 ﻿using System.Threading.Tasks;
 using Contracts;
 using Entities;
+using Entities.Context;
 
 namespace Repository
 {
     public class RepositoryManager : IRepositoryManager
     {
-        private readonly RepositoryContext _repositoryContext;
+        private readonly BlueRoomContext _repositoryContext;
         private IArtistRepository _artistRepository;
-        private IShowRepository _ShowRepository;
-
+        private IShowRepository _showRepository;
         private ISongRepository _songRepository;
         private IVenueRepository _venueRepository;
 
-        public RepositoryManager(RepositoryContext repositoryContext)
+        public RepositoryManager(BlueRoomContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
         }
 
         public ISongRepository Song => _songRepository ??= new SongRepository(_repositoryContext);
-
         public IArtistRepository Artist => _artistRepository ??= new ArtistRepository(_repositoryContext);
-
-
-        public IShowRepository Show
-        {
-            get
-            {
-                if (_ShowRepository == null)
-                    _ShowRepository = new ShowRepository(_repositoryContext);
-
-                return _ShowRepository;
-            }
-        }
-
-        public IVenueRepository Venue
-        {
-            get
-            {
-                if (_venueRepository == null)
-                    _venueRepository = new VenueRepository(_repositoryContext);
-
-                return _venueRepository;
-            }
-        }
+        public IShowRepository Show => _showRepository ??= new ShowRepository(_repositoryContext);
+        public IVenueRepository Venue => _venueRepository ??= new VenueRepository(_repositoryContext);
 
         public Task SaveAsync()
         {

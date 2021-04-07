@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace BlueRoom.Models
+namespace Entities.Models
 {
     [Table("show")]
     public partial class Show
@@ -16,7 +16,7 @@ namespace BlueRoom.Models
         {
             SongPerformances = new HashSet<SongPerformance>();
         }
-
+        
         [Key]
         [Column("show_id")]
         public int ShowId { get; set; }

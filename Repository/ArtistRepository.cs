@@ -1,17 +1,16 @@
 ﻿using Contracts;
-using Entities;
-using Entities.Models.Partials;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Context;
+using Entities.Models;
 
 namespace Repository
 {
     public class ArtistRepository : RepositoryBase<Artist>, IArtistRepository
     {
-        public ArtistRepository(RepositoryContext repositoryContext)
+        public ArtistRepository(BlueRoomContext repositoryContext)
             : base(repositoryContext)
         {
         }
@@ -22,16 +21,16 @@ namespace Repository
                 .ToListAsync();
 
         public async Task<Artist> GetArtistAsync(int artistId, bool trackChanges) =>
-            await FindByCondition(c => c.Id.Equals(artistId), trackChanges)
+            await FindByCondition(c => c.ArtistId.Equals(artistId), trackChanges)
                 .SingleOrDefaultAsync();
 
         public async Task<Artist> GetArtistWithSongsAsync(int artistId) =>
-           await FindByCondition(c => c.Id.Equals(artistId), false)
-            .Include(a=>a.OriginalSongs)
+           await FindByCondition(c => c.ArtistId.Equals(artistId), false)
+            .Include(a=>a.Songs)
                .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<Artist>> GetByIdsAsync(IEnumerable<int> ids, bool trackChanges) =>
-            await FindByCondition(x => ids.Contains(x.Id), trackChanges)
+            await FindByCondition(x => ids.Contains(x.ArtistId), trackChanges)
                 .ToListAsync();
 
         public void CreateArtist(Artist artist) => Create(artist);

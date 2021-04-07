@@ -24,8 +24,9 @@ namespace Entities.RequestFeatures
 
         public static PagedList<T> ToPagedList(IEnumerable<T> source, int pageNumber, int pageSize)
         {
-            var count = source.Count();
-            var items = source
+            var enumerable = source.ToList();
+            var count = enumerable.Count;
+            var items = enumerable
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize).ToList();
 

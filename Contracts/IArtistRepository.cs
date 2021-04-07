@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Collections;
-using Entities.Models.Partials;
+using Entities.Models;
 
 namespace Contracts
 {

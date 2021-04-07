@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace BlueRoom.Models
+namespace Entities.Models
 {
     [Table("set_number")]
     public partial class SetNumber

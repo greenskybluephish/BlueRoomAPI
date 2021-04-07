@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities;
+using Entities.Context;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,7 @@ namespace BlueRoom.Extensions
         public static void ConfigureSqlServerContext(this IServiceCollection services, IConfiguration config)
         {
 
-            services.AddDbContext<RepositoryContext>(options =>
+            services.AddDbContext<BlueRoomContext>(options =>
                 options.UseSqlServer(
                     config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("BlueRoom")));
         }
