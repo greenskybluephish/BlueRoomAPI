@@ -46,6 +46,7 @@ namespace BlueRoom.Controllers
             {
                 ShowId = s.ShowId,
                 ShowDate = s.Date,
+                ShowDateString = s.Date.ToShortDateString(),
                 ArtistName = s.PerformingArtist.Name,
                 VenueName = s.Venue.Name,
                 VenueCity = s.Venue.City,
@@ -72,6 +73,7 @@ namespace BlueRoom.Controllers
             {
                 ShowId = s.ShowId,
                 ShowDate = s.Date,
+                ShowDateString = s.Date.ToShortDateString(),
                 VenueName = s.Venue.Name,
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,

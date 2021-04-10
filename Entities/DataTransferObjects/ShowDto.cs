@@ -11,6 +11,7 @@ namespace Entities.DataTransferObjects
     {
         public int ShowId { get; set; }
         public DateTime ShowDate { get; set; }
+        public string ShowDateString { get; set; }
         public string VenueName { get; set; }
         public string VenueCity { get; set; }
         public string VenueState { get; set; }

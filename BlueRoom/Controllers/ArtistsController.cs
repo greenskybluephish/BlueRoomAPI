@@ -70,6 +70,34 @@ namespace BlueRoom.Controllers
             return Ok(artistsDto);
         }
 
+        [HttpGet("{name}/{date}")]
+        public async Task<IActionResult> Get(string name, DateTime date)
+        {
+            var upper = name.ToUpper();
+            var shows = _repository.Show.FindByCondition(x => x.PerformingArtist.Name == name && x.Date.Equals(date), false)
+                .Include(v => v.Venue).Include(a => a.PerformingArtist)
+                .Include(s => s.SongPerformances).ThenInclude(y => y.Song)
+
+                .Include(a => a.PerformingArtist).AsQueryable();
+
+            var showsDto = await shows.Select(s => new ShowDto()
+            {
+                ShowId = s.ShowId,
+                ShowDate = s.Date,
+                ShowDateString = s.Date.ToShortDateString(),
+                ArtistName = s.PerformingArtist.Name,
+                VenueName = s.Venue.Name,
+                VenueCity = s.Venue.City,
+                VenueCountry = s.Venue.Country,
+                VenueState = s.Venue.State,
+                Setlist = s.SongPerformances.Select(y => y.Song.Name)
+            }).FirstOrDefaultAsync();
+            return Ok(showsDto);
+        }
+    
+
+
+
         // POST api/Artist
         [HttpPost]
         public async Task Post(ArtistDto model)
