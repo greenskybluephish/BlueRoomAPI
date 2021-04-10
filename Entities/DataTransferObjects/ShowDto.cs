@@ -20,7 +20,7 @@ namespace Entities.DataTransferObjects
         public string ArtistName { get; set; }
         public ICollection<SongPerformanceDto> SongPerformances { get; set; }
         public ICollection<SongDto> Songs { get; set; }
-        public IEnumerable<string> Setlist { get; set; }
+        public IEnumerable<SongBase> Setlist { get; set; }
 
     }
 }

@@ -74,7 +74,7 @@ namespace BlueRoom.Controllers
         public async Task<IActionResult> Get(string name, DateTime date)
         {
             var upper = name.ToUpper();
-            var shows = _repository.Show.FindByCondition(x => x.PerformingArtist.Name == name && x.Date.Equals(date), false)
+            var shows = _repository.Show.FindByCondition(x => x.PerformingArtist.Name == upper && x.Date.Equals(date), false)
                 .Include(v => v.Venue).Include(a => a.PerformingArtist)
                 .Include(s => s.SongPerformances).ThenInclude(y => y.Song)
 
@@ -90,7 +90,7 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => y.Song.Name)
+                Setlist = s.SongPerformances.Select(y => new SongBase(y.SongId ?? 0, y.SongPerformanceName ?? y.Song.Name))
             }).FirstOrDefaultAsync();
             return Ok(showsDto);
         }
