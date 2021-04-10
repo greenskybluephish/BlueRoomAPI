@@ -10,20 +10,16 @@ namespace Entities.DataTransferObjects
     public class ShowDto
     {
         public int ShowId { get; set; }
-
-        [Required(ErrorMessage = "Date is required")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
-        public DateTime Date { get; set; }
-
-        [Required] public int VenueId { get; set; }
-
-        public VenueDto Venue { get; set; }
-
-        [Required(ErrorMessage = "Artist Id is required")]
-        public int PerformingArtistId { get; set; }
-        public string PerformingArtistName { get; set; }
+        public DateTime ShowDate { get; set; }
+        public string VenueName { get; set; }
+        public string VenueCity { get; set; }
+        public string VenueState { get; set; }
+        public string VenueCountry { get; set; }
+        public int ArtistId { get; set; }
+        public string ArtistName { get; set; }
         public ICollection<SongPerformanceDto> SongPerformances { get; set; }
-/*        public ICollection<SongDto> Songs { get; set; }*/
+        public ICollection<SongDto> Songs { get; set; }
+        public IEnumerable<string> Setlist { get; set; }
 
     }
 }

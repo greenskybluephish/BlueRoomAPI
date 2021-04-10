@@ -25,7 +25,7 @@ namespace Repository
 
         public async Task<IEnumerable<Show>> GetShowsAsync(int artistId, bool trackChanges) =>
             await FindByCondition(s => s.PerformingArtistId.Equals(artistId), trackChanges)
-                .OrderByDescending(c => c.Date)
+                .OrderBy(c => c.Date)
                 .ToListAsync();
 
         public async Task<Show> GetShowAsync(int showId, bool trackChanges) =>

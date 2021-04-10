@@ -29,8 +29,8 @@ namespace Entities.Models
         public string Description { get; set; }
 
         [InverseProperty(nameof(Show.PerformingArtist))]
-        public virtual ICollection<Show> Shows { get; set; }
+        public ICollection<Show> Shows { get; set; }
         [InverseProperty(nameof(Song.OriginalArtist))]
-        public virtual ICollection<Song> Songs { get; set; }
+        public ICollection<Song> Songs { get; set; }
     }
 }

@@ -37,10 +37,22 @@ namespace BlueRoom.Controllers
         public async Task<IActionResult> Get()
         {
             var shows = _repository.Show.FindAll(false)
-                .Include(s=>s.SongPerformances)
+                .Include(v =>v.Venue).Include(a=>a.PerformingArtist)
+                .Include(s=>s.SongPerformances).ThenInclude(y=>y.Song)
+               
                 .Include(a=>a.PerformingArtist).AsQueryable();
 
-            var showsDto = await _mapper.ProjectTo<ShowDto>(shows).ToListAsync();
+            var showsDto = await shows.Select(s => new ShowDto()
+            {
+                ShowId = s.ShowId,
+                ShowDate = s.Date,
+                ArtistName = s.PerformingArtist.Name,
+                VenueName = s.Venue.Name,
+                VenueCity = s.Venue.City,
+                VenueCountry = s.Venue.Country,
+                VenueState = s.Venue.State,
+                Setlist = s.SongPerformances.Select(y => y.Song.Name)
+            }).OrderBy(y=>y.ShowDate).ToListAsync();
 
             return Ok(showsDto);
         }
@@ -50,8 +62,23 @@ namespace BlueRoom.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var show = await _repository.Show.GetShowAsync(id, trackChanges: false);
-            return Ok(show);
+            var shows = _repository.Show.FindByCondition(x=>x.ShowId.Equals(id), false)
+                .Include(v => v.Venue).Include(a => a.PerformingArtist)
+                .Include(s => s.SongPerformances).ThenInclude(y => y.Song)
+
+                .Include(a => a.PerformingArtist).AsQueryable();
+
+            var showsDto = await shows.Select(s => new ShowDto()
+            {
+                ShowId = s.ShowId,
+                ShowDate = s.Date,
+                VenueName = s.Venue.Name,
+                VenueCity = s.Venue.City,
+                VenueCountry = s.Venue.Country,
+                VenueState = s.Venue.State,
+                Setlist = s.SongPerformances.Select(y => y.Song.Name)
+            }).FirstOrDefaultAsync();
+            return Ok(showsDto);
         }
 
         // POST api/Show

@@ -17,7 +17,8 @@ namespace BlueRoom
             CreateMap<SongDto, Song>();
 
             CreateMap<Show, ShowDto>()
-                .ForMember(dto=> dto.PerformingArtistName, cfg => cfg.MapFrom(a=>a.PerformingArtist.Name));
+                .ForMember(dto=> dto.ArtistName, cfg => cfg.MapFrom(a=>a.PerformingArtist.Name))
+                .ForMember(dto=>dto.Setlist, cfg=> cfg.MapFrom(s=> s.SongPerformances.Select(y=>y.Song.Name)));
 
             CreateMap<ShowDto, Show>();
 

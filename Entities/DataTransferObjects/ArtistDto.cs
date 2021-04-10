@@ -12,8 +12,10 @@ namespace Entities.DataTransferObjects
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<SongDto> Songs { get; set; }
-        public ICollection<ShowDto> Shows { get; set; }
+        public IEnumerable<SongBase> OriginalSongs { get; set; }
+        public IEnumerable<Show> Shows { get; set; }
+
+        public IEnumerable<SongPerformance> LiveSongs { get; set; }
 
     }
 }

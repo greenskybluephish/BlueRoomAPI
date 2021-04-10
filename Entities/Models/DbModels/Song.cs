@@ -14,7 +14,6 @@ namespace Entities.Models
     {
         public Song()
         {
-            SongPerformances = new HashSet<SongPerformance>();
         }
 
         [Key]
@@ -33,6 +32,6 @@ namespace Entities.Models
         [InverseProperty(nameof(Artist.Songs))]
         public virtual Artist OriginalArtist { get; set; }
         [InverseProperty(nameof(SongPerformance.Song))]
-        public virtual ICollection<SongPerformance> SongPerformances { get; set; }
+        public ICollection<SongPerformance> SongPerformances { get; set; }
     }
 }

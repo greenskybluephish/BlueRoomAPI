@@ -19,5 +19,18 @@ namespace Entities.DataTransferObjects
         public ArtistDto OriginalArtist { get; set; }
 
         public ICollection<SongPerformanceDto> SongPerformances { get; set; }
+
+
+    }
+
+    public class SongBase
+    {
+        public SongBase(int id, string name)
+        {
+            Name = name;
+            Id = id;
+        }
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
