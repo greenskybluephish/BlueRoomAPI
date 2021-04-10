@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -38,13 +39,13 @@ namespace BlueRoom.Controllers
         {
             var artists = _repository.Artist.FindAll(false)
                 .Include(a => a.Shows).Include(a=>a.Songs)
-                .Include(s => s.SongPerformances).ThenInclude(y => y.Song).AsQueryable();
+                .AsQueryable();
 
             var artistsDto = await artists.Select(s => new ArtistDto
             {
                 ArtistId = s.ArtistId,
-                Name = s.Name,
-                OriginalSongs = s.Songs.Select(y=> new SongBase(y.SongId, y.Name)),
+                ArtistName = s.Name,
+                OriginalSongs = s.Songs.Select(y=> new IdNameBase(y.SongId, y.Name)),
                 Shows = s.Shows
             }).ToListAsync();
 
@@ -54,17 +55,17 @@ namespace BlueRoom.Controllers
 
         //[Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int? id)
         {
             var artists = _repository.Artist.FindByCondition(x => x.ArtistId.Equals(id), false)
-                .Include(s => s.SongPerformances).ThenInclude(y => y.Song)
+                .Include(s => s.Songs)
                 .Include(a => a.Shows).AsQueryable();
 
             var artistsDto = await artists.Select(s => new ArtistDto
             {
                 ArtistId = s.ArtistId,
-                Name = s.Name,
-                OriginalSongs = s.Songs.Select(y => new SongBase(y.SongId, y.Name)),
+                ArtistName = s.Name,
+                OriginalSongs = s.Songs.Select(y => new IdNameBase(y.SongId, y.Name)),
                 Shows = s.Shows
             }).FirstOrDefaultAsync();
             return Ok(artistsDto);
@@ -76,9 +77,7 @@ namespace BlueRoom.Controllers
             var upper = name.ToUpper();
             var shows = _repository.Show.FindByCondition(x => x.PerformingArtist.Name == upper && x.Date.Equals(date), false)
                 .Include(v => v.Venue).Include(a => a.PerformingArtist)
-                .Include(s => s.SongPerformances).ThenInclude(y => y.Song)
-
-                .Include(a => a.PerformingArtist).AsQueryable();
+                .Include(s => s.SongPerformances).AsQueryable();
 
             var showsDto = await shows.Select(s => new ShowDto()
             {
@@ -90,13 +89,26 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => new SongBase(y.SongId ?? 0, y.SongPerformanceName ?? y.Song.Name))
+                Setlist = s.SongPerformances.Select(y => new IdNameBase(y.SongId, y.Song.Name))
             }).FirstOrDefaultAsync();
+
             return Ok(showsDto);
         }
-    
 
+        [HttpGet("GetArtistDropdown")]
+        public async Task<IActionResult> GetArtistDropdown()
+        {
+            var artists = _repository.Artist.FindAll(false)
+                .Select(y=> new {y.ArtistId, y.Name}).AsQueryable();
 
+            var artistsDto = await artists.Select(s => new ArtistDto
+            {
+                ArtistId = s.ArtistId,
+                ArtistName = s.Name
+            }).ToListAsync();
+
+            return Ok(artistsDto);
+        }
 
         // POST api/Artist
         [HttpPost]

@@ -51,13 +51,13 @@ namespace Entities.DataTransferObjects
         public SetNumber SetNumber { get; set; }
         public List<SongPerformance> SongList { get; set; }
 
-        public SongPerformance Opener => SongList.First();
-        public SongPerformance Closer => SongList.Last();
+        public SongPerformance Opener => SongList.First(y=>y.SetOpener);
+        public SongPerformance Closer => SongList.Last(y=>y.SetCloser);
     }
 
-    public class SongBase
+    public class IdNameBase
     {
-        public SongBase(int id, string name)
+        public IdNameBase(int id, string name)
         {
             Name = name;
             Id = id;

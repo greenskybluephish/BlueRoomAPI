@@ -37,10 +37,11 @@ namespace BlueRoom.Controllers
         public async Task<IActionResult> Get()
         {
             var shows = _repository.Show.FindAll(false)
-                .Include(v =>v.Venue).Include(a=>a.PerformingArtist)
-                .Include(s=>s.SongPerformances).ThenInclude(y=>y.Song)
-               
-                .Include(a=>a.PerformingArtist).AsQueryable();
+                .Include(v =>v.Venue)
+                .Include(a=>a.PerformingArtist)
+                .Include(s=>s.SongPerformances)
+                .ThenInclude(y=>y.Song)
+                .AsQueryable();
 
             var showsDto = await shows.Select(s => new ShowDto()
             {
@@ -52,7 +53,7 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => y.Song.Name)
+                Setlist = s.SongPerformances.Select(y => new IdNameBase(y.SongId, y.Song.Name))
             }).OrderBy(y=>y.ShowDate).ToListAsync();
 
             return Ok(showsDto);
@@ -63,11 +64,12 @@ namespace BlueRoom.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var shows = _repository.Show.FindByCondition(x=>x.ShowId.Equals(id), false)
-                .Include(v => v.Venue).Include(a => a.PerformingArtist)
-                .Include(s => s.SongPerformances).ThenInclude(y => y.Song)
-
-                .Include(a => a.PerformingArtist).AsQueryable();
+            var shows = _repository.Show.FindByCondition(x=> x.ShowId.Equals(id), false)
+                .Include(v => v.Venue)
+                .Include(a => a.PerformingArtist)
+                .Include(s => s.SongPerformances)
+                .ThenInclude(y => y.Song)
+                .AsQueryable();
 
             var showsDto = await shows.Select(s => new ShowDto()
             {
@@ -78,7 +80,7 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => y.Song.Name)
+                Setlist = s.SongPerformances.Select(y => new IdNameBase(y.SongId, y.Song.Name))
             }).FirstOrDefaultAsync();
             return Ok(showsDto);
         }
