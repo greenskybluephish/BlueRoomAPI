@@ -38,7 +38,9 @@ namespace BlueRoom.Controllers
         public async Task<IActionResult> Get()
         {
             var artists = _repository.Artist.FindAll(false)
-                .Include(a => a.Shows).Include(a=>a.Songs)
+                .Include(a => a.Shows).ThenInclude(s => s.Venue)
+                .Include(a => a.Shows).ThenInclude(s=>s.SongPerformances)
+                .Include(a=>a.Songs)
                 .AsQueryable();
 
             var artistsDto = await artists.Select(s => new ArtistDto
@@ -46,7 +48,7 @@ namespace BlueRoom.Controllers
                 ArtistId = s.ArtistId,
                 ArtistName = s.Name,
                 OriginalSongs = s.Songs.Select(y=> new IdNameBase(y.SongId, y.Name)),
-                Shows = s.Shows
+                Shows = s.Shows.Select(d=>new ShowDto(d))
             }).ToListAsync();
 
             return Ok(artistsDto);
@@ -58,15 +60,17 @@ namespace BlueRoom.Controllers
         public async Task<IActionResult> Get(int? id)
         {
             var artists = _repository.Artist.FindByCondition(x => x.ArtistId.Equals(id), false)
-                .Include(s => s.Songs)
-                .Include(a => a.Shows).AsQueryable();
+                .Include(a => a.Shows).ThenInclude(s => s.Venue)
+                .Include(a => a.Shows).ThenInclude(s => s.SongPerformances)
+                .Include(a => a.Songs)
+                .AsQueryable();
 
             var artistsDto = await artists.Select(s => new ArtistDto
             {
                 ArtistId = s.ArtistId,
                 ArtistName = s.Name,
                 OriginalSongs = s.Songs.Select(y => new IdNameBase(y.SongId, y.Name)),
-                Shows = s.Shows
+                Shows = s.Shows.Select(d => new ShowDto(d))
             }).FirstOrDefaultAsync();
             return Ok(artistsDto);
         }
@@ -98,8 +102,7 @@ namespace BlueRoom.Controllers
         [HttpGet("GetArtistDropdown")]
         public async Task<IActionResult> GetArtistDropdown()
         {
-            var artists = _repository.Artist.FindAll(false)
-                .Select(y=> new {y.ArtistId, y.Name}).AsQueryable();
+            var artists = _repository.Artist.FindAll(false).AsQueryable();
 
             var artistsDto = await artists.Select(s => new ArtistDto
             {
