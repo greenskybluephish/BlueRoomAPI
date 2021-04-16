@@ -24,6 +24,7 @@ namespace Entities.Models
         public DateTime Date { get; set; }
         [Column("venue_id")]
         public int VenueId { get; set; }
+        public Venue Venue { get; set; }
         [Column("performing_artist_id")]
         public int PerformingArtistId { get; set; }
 

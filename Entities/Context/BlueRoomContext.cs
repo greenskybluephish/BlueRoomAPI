@@ -20,49 +20,204 @@ namespace Entities.Context
         }
 
         public virtual DbSet<Artist> Artists { get; set; }
+        public virtual DbSet<SetNumber> SetNumbers { get; set; }
         public virtual DbSet<Show> Shows { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<SongPerformance> SongPerformances { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
+        public virtual DbSet<VwShow> VwShows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
+            modelBuilder.Entity<Artist>(entity =>
+            {
+                entity.ToTable("artist");
+
+                entity.Property(e => e.ArtistId).HasColumnName("artist_id");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+            });
+
+            modelBuilder.Entity<SetNumber>(entity =>
+            {
+                entity.ToTable("set_number");
+
+                entity.Property(e => e.SetNumberId).HasColumnName("set_number_id");
+
+                entity.Property(e => e.FullSet).HasColumnName("full_set");
+
+                entity.Property(e => e.SetIndex).HasColumnName("set_index");
+
+                entity.Property(e => e.SetName)
+                    .HasMaxLength(255)
+                    .HasColumnName("set_name");
+            });
+
             modelBuilder.Entity<Show>(entity =>
             {
+                entity.ToTable("show");
+
+                entity.Property(e => e.ShowId).HasColumnName("show_id");
+
+                entity.Property(e => e.Date).HasColumnName("date");
+
+                entity.Property(e => e.PerformingArtistId).HasColumnName("performing_artist_id");
+
+                entity.Property(e => e.VenueId).HasColumnName("venue_id");
+
                 entity.HasOne(d => d.PerformingArtist)
                     .WithMany(p => p.Shows)
                     .HasForeignKey(d => d.PerformingArtistId)
                     .HasConstraintName("FK_Show_Artist_performing_artist_id");
+
+                entity.HasOne(d => d.Venue)
+                    .WithMany(p => p.Shows)
+                    .HasForeignKey(d => d.VenueId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_show_venue");
             });
 
             modelBuilder.Entity<Song>(entity =>
             {
+                entity.ToTable("song");
+
+                entity.Property(e => e.SongId).HasColumnName("song_id");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.OriginalArtistId).HasColumnName("original_artist_id");
+
+                entity.Property(e => e.OriginalArtistName)
+                    .HasMaxLength(255)
+                    .HasColumnName("original_artist_name");
+
                 entity.HasOne(d => d.OriginalArtist)
                     .WithMany(p => p.Songs)
                     .HasForeignKey(d => d.OriginalArtistId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Song_Artist_original_artist_id");
             });
 
             modelBuilder.Entity<SongPerformance>(entity =>
             {
+                entity.ToTable("song_performance");
+
+                entity.Property(e => e.SongPerformanceId).HasColumnName("song_performance_id");
+
+                entity.Property(e => e.DurationInSec).HasColumnName("duration_in_sec");
+
+                entity.Property(e => e.MediaLinkId).HasColumnName("media_link_id");
+
+                entity.Property(e => e.SegueOut).HasColumnName("segue_out");
+
+                entity.Property(e => e.SetCloser).HasColumnName("set_closer");
+
+                entity.Property(e => e.SetNumberId).HasColumnName("set_number_id");
+
+                entity.Property(e => e.SetOpener).HasColumnName("set_opener");
+
+                entity.Property(e => e.SetSongIndex).HasColumnName("set_song_index");
+
+                entity.Property(e => e.ShowId).HasColumnName("show_id");
+
+                entity.Property(e => e.SongId).HasColumnName("song_id");
+
+                entity.Property(e => e.SongPerformanceNote)
+                    .HasMaxLength(255)
+                    .HasColumnName("song_performance_note");
+
                 entity.HasOne(d => d.SetNumber)
                     .WithMany(p => p.SongPerformances)
                     .HasForeignKey(d => d.SetNumberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Song_Performance_Set_Number_set_number_id");
+                    .HasConstraintName("FK_song_performance_set_number");
 
                 entity.HasOne(d => d.Show)
                     .WithMany(p => p.SongPerformances)
                     .HasForeignKey(d => d.ShowId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Song_Performance_Show_show_id");
+                    .HasConstraintName("FK_song_performance_show");
 
                 entity.HasOne(d => d.Song)
                     .WithMany(p => p.SongPerformances)
                     .HasForeignKey(d => d.SongId)
                     .HasConstraintName("FK_Song_Performance_Song_song_id");
+            });
+
+            modelBuilder.Entity<Venue>(entity =>
+            {
+                entity.ToTable("venue");
+
+                entity.Property(e => e.VenueId).HasColumnName("venue_id");
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("city");
+
+                entity.Property(e => e.Country)
+                    .IsRequired()
+                    .HasMaxLength(55)
+                    .HasColumnName("country");
+
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.State)
+                    .IsRequired()
+                    .HasMaxLength(55)
+                    .HasColumnName("state");
+            });
+
+            modelBuilder.Entity<VwShow>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vwShow");
+
+                entity.Property(e => e.ArtistId).HasColumnName("artist_id");
+
+                entity.Property(e => e.ArtistName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("artist_name");
+
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("city");
+
+                entity.Property(e => e.Date).HasColumnName("date");
+
+                entity.Property(e => e.ShowId).HasColumnName("show_id");
+
+                entity.Property(e => e.State)
+                    .IsRequired()
+                    .HasMaxLength(55)
+                    .HasColumnName("state");
+
+                entity.Property(e => e.VenueId).HasColumnName("venue_id");
+
+                entity.Property(e => e.VenueName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("venue_name");
             });
 
             OnModelCreatingPartial(modelBuilder);

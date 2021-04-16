@@ -10,10 +10,12 @@ namespace Entities.DataTransferObjects
     {
         public int ArtistId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string ArtistName { get; set; }
         public string Description { get; set; }
-        public ICollection<SongDto> Songs { get; set; }
-        public ICollection<ShowDto> Shows { get; set; }
+        public IEnumerable<IdNameBase> OriginalSongs { get; set; }
+        public IEnumerable<ShowDto> Shows { get; set; }
+
+        public IEnumerable<SongPerformance> LiveSongs { get; set; }
 
     }
 }

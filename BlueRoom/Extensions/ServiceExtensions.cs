@@ -22,7 +22,7 @@ namespace BlueRoom.Extensions
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
-                        .WithOrigins("https://localhost:5001");
+                        .WithOrigins("http://localhost:3333");
                 });
             });
         }

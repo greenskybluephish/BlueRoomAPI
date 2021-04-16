@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\DbModels\Artist.cs" />
+    <Compile Remove="Models\DbModels\SetNumber.cs" />
+    <Compile Remove="Models\DbModels\Show.cs" />
+    <Compile Remove="Models\DbModels\Song.cs" />
+    <Compile Remove="Models\DbModels\SongPerformance.cs" />
+    <Compile Remove="Models\DbModels\Venue.cs" />
     <Compile Remove="Models\Partials\Comment.cs" />
     <Compile Remove="Models\Partials\ExternalMediaObject.cs" />
     <Compile Remove="Models\Partials\Locale.cs" />
@@ -19,6 +25,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\DbModels\" />
   </ItemGroup>
 
 </Project>
