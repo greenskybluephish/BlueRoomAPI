@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,13 +13,13 @@ namespace BlueRoom.Controllers
 {
     [Route("api/Shows")]
     [ApiController]
-    public class ShowController : ControllerBase
+    public class ShowsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public ShowController(IRepositoryManager repository,
+        public ShowsController(IRepositoryManager repository,
             ILoggerManager logger,
             IMapper mapper)
         {
@@ -32,7 +28,7 @@ namespace BlueRoom.Controllers
             _mapper = mapper;
         }
 
-        // GET api/Show
+        // GET api/Shows
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -53,8 +49,8 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => new IdNameBase(y.SongId, y.Song.Name))
-            }).OrderBy(y=>y.ShowDate).ToListAsync();
+                Setlist = new SetlistDto(s.SongPerformances)
+            }).OrderBy(y=>y.ShowDate).Take(2).ToListAsync();
 
             return Ok(showsDto);
         }
@@ -64,14 +60,16 @@ namespace BlueRoom.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var shows = _repository.Show.FindByCondition(x=> x.ShowId.Equals(id), false)
+            var s = await _repository.Show.FindByCondition(x=> x.ShowId.Equals(id), false)
                 .Include(v => v.Venue)
                 .Include(a => a.PerformingArtist)
                 .Include(s => s.SongPerformances)
+                .ThenInclude(y=>y.SetNumber)
+                .Include(s => s.SongPerformances)
                 .ThenInclude(y => y.Song)
-                .AsQueryable();
+                .FirstOrDefaultAsync();
 
-            var showsDto = await shows.Select(s => new ShowDto()
+            var showsDto = new ShowDto()
             {
                 ShowId = s.ShowId,
                 ShowDate = s.Date,
@@ -80,8 +78,8 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => new IdNameBase(y.SongId, y.Song.Name))
-            }).FirstOrDefaultAsync();
+                Setlist = new SetlistDto(s.SongPerformances)
+            };
             return Ok(showsDto);
         }
 
@@ -117,6 +115,11 @@ namespace BlueRoom.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var show = await _repository.Show.GetShowAsync(id, false);
+
+            if (show == null)
+            {
+                return NotFound();
+            }
 
             _repository.Show.DeleteShow(show);
             await _repository.SaveAsync();

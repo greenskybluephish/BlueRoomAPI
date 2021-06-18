@@ -10,7 +10,7 @@ namespace Entities.Models
     {
         public Venue()
         {
-            Shows = new HashSet<Show>();
+
         }
 
         public int VenueId { get; set; }

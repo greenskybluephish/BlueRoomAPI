@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,45 +29,55 @@ namespace BlueRoom.Controllers
             _mapper = mapper;
         }
 
-        // GET api/Artist
+/*        // GET api/Artist
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var artists = _repository.Artist.FindAll(false)
-                .Include(a => a.Shows).ThenInclude(s => s.Venue)
-                .Include(a => a.Shows).ThenInclude(s=>s.SongPerformances)
-                .Include(a=>a.Songs)
-                .AsQueryable();
+            var shows = _repository.Show.FindAll(false)
+                .Include(s => s.Venue)
+                .Include(x=>x.PerformingArtist)
+                .Include(s=>s.SongPerformances)
+                .ThenInclude(a=>a.Song)
+                .Include(s => s.SongPerformances)
+                .ThenInclude(y => y.SetNumber)
+                .Where(x=>x.PerformingArtistId == id)
+                .ToList();
 
-            var artistsDto = await artists.Select(s => new ArtistDto
+
+            var artistsDto = new ArtistDto
             {
-                ArtistId = s.ArtistId,
-                ArtistName = s.Name,
-                OriginalSongs = s.Songs.Select(y=> new IdNameBase(y.SongId, y.Name)),
-                Shows = s.Shows.Select(d=>new ShowDto(d))
+                ArtistId = s.PerformingArtist.ArtistId,
+                ArtistName = s.PerformingArtist.Name,
+                Shows = shows
             }).ToListAsync();
 
             return Ok(artistsDto);
-        }
+        }*/
 
 
         //[Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int? id)
         {
-            var artists = _repository.Artist.FindByCondition(x => x.ArtistId.Equals(id), false)
-                .Include(a => a.Shows).ThenInclude(s => s.Venue)
-                .Include(a => a.Shows).ThenInclude(s => s.SongPerformances)
-                .Include(a => a.Songs)
+            var shows = _repository.Show.FindAll(false)
+                .Include(s => s.Venue)
+                .Include(x => x.PerformingArtist)
+                .Include(s => s.SongPerformances)
+                .ThenInclude(a => a.Song)
+                .Include(s => s.SongPerformances)
+                .ThenInclude(y => y.SetNumber)
+                .Where(x => x.PerformingArtistId == id)
+                .OrderBy(x=>x.Date)
                 .AsQueryable();
 
-            var artistsDto = await artists.Select(s => new ArtistDto
+            var artistsDto = new ArtistDto
             {
-                ArtistId = s.ArtistId,
-                ArtistName = s.Name,
-                OriginalSongs = s.Songs.Select(y => new IdNameBase(y.SongId, y.Name)),
-                Shows = s.Shows.Select(d => new ShowDto(d))
-            }).FirstOrDefaultAsync();
+                ArtistId = shows.First().PerformingArtistId,
+                ArtistName = shows.First().PerformingArtist.Name,
+                Shows = shows.Select(d => new ShowDto(d))
+            };
+
+
             return Ok(artistsDto);
         }
 
@@ -93,7 +99,7 @@ namespace BlueRoom.Controllers
                 VenueCity = s.Venue.City,
                 VenueCountry = s.Venue.Country,
                 VenueState = s.Venue.State,
-                Setlist = s.SongPerformances.Select(y => new IdNameBase(y.SongId, y.Song.Name))
+                Setlist = new SetlistDto(s.SongPerformances)
             }).FirstOrDefaultAsync();
 
             return Ok(showsDto);

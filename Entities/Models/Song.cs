@@ -10,7 +10,7 @@ namespace Entities.Models
     {
         public Song()
         {
-            SongPerformances = new HashSet<SongPerformance>();
+
         }
 
         public int SongId { get; set; }
